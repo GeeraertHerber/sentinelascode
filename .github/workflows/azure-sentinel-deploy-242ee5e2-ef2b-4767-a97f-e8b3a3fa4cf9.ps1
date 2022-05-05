@@ -169,6 +169,7 @@ function CleanDeletedFilesFromTable {
 
 function AttemptInvokeRestMethod($method, $url, $body, $contentTypes, $maxRetries) {
     $Stoploop = $false
+    Write-Host "$method, $url, $body, $contentTypes"
     $retryCount = 0
     do {
         try {
@@ -182,8 +183,6 @@ function AttemptInvokeRestMethod($method, $url, $body, $contentTypes, $maxRetrie
             }
             else {
                 Write-Host "[Warning] API call failed: $_.`n Conducting retry #$retryCount."
-                Write-Host "StatusCode:" $_.Exception.Response.StatusCode.value__ 
-                Write-Host "StatusDescription:" $_.Exception.Response.StatusDescription 
                 Start-Sleep -Seconds 5
                 $retryCount = $retryCount + 1
             }
