@@ -29,7 +29,7 @@ jobs:
       contentTypes: 'AutomationRule,Playbook'
       branch: 'master'
       sourceControlId: '242ee5e2-ef2b-4767-a97f-e8b3a3fa4cf9'
-      githubAuthToken: ${{ secrets.GITHUB_TOKEN }}
+      githubAuthToken: ${{ secrets.GITHUBAUTHTOKEN }}
       smartDeployment: 'true'
 
     steps:
