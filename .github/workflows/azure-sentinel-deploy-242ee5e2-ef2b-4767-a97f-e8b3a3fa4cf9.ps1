@@ -182,7 +182,8 @@ function AttemptInvokeRestMethod($method, $url, $body, $contentTypes, $maxRetrie
             }
             else {
                 Write-Host "[Warning] API call failed: $_.`n Conducting retry #$retryCount."
-                Write-Host "$result"
+                Write-Host "StatusCode:" $_.Exception.Response.StatusCode.value__ 
+                Write-Host "StatusDescription:" $_.Exception.Response.StatusDescription 
                 Start-Sleep -Seconds 5
                 $retryCount = $retryCount + 1
             }
