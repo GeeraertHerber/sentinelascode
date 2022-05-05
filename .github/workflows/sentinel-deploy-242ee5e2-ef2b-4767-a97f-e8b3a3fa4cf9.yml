@@ -21,6 +21,7 @@ on:
 jobs:
   deploy-content:
     runs-on: self-hosted
+    # HGello
     env:
       resourceGroupName: 'sentinel-env'
       workspaceName: 'herber-sentinel'
