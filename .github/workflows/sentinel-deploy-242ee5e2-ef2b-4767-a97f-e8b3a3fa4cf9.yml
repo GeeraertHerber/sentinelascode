@@ -20,7 +20,7 @@ on:
 
 jobs:
   deploy-content:
-    runs-on: self-hosted
+    runs-on: label-1
     # HGello
     env:
       resourceGroupName: 'sentinel-env'
