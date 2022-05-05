@@ -145,6 +145,7 @@ function PushCsvToRepo($getTreeResponse) {
         Headers     = $header
         Body        = $body | ConvertTo-Json
     }
+    Write-Output "$githubRepository"
     AttemptInvokeRestMethod "Put" $createFileUrl $body $null 3
 }
 
