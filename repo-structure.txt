@@ -7,11 +7,11 @@
 |  |- Connectors/  ______________________ # Subfolder for Connectors
 |     |- connectors.json _________________ # Connectors definition file (JSON)
 |
-|  |- HuntingRules/ _____________________ # 
-|     |- hunting-rules.json _______________ # Hunting Rules definition file (JSON)
+|  |- HuntingRules/                          # 
+|     |- hunting-rules.json                   # Hunting Rules definition file (JSON)
 |
-|  |- Onboard/  ______________________ # Subfolder for Onboarding
-|     |- onboarding.json _________________ # Onboarding definition file (JSON)
+|  |- Onboard/                               # Subfolder for Onboarding
+|     |- onboarding.json                     # Onboarding definition file (JSON)
 |
 |  |- Pipelines/ _____________________ # Subfolder for Pipelines 
 |     |- pipeline.yml _______________ # Pipeline definition files (YAML)
