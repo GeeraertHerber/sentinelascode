@@ -145,7 +145,6 @@ function PushCsvToRepo($getTreeResponse) {
         Headers     = $header
         Body        = $body | ConvertTo-Json
     }
-    Write-Output "$githubRepository"
     AttemptInvokeRestMethod "Put" $createFileUrl $body $null 3
 }
 
@@ -182,7 +181,8 @@ function AttemptInvokeRestMethod($method, $url, $body, $contentTypes, $maxRetrie
                 $Stoploop = $true
             }
             else {
-                Write-Host "[Warning] API call failed: $_ on $url with body $body.`n Conducting retry #$retryCount."
+                Write-Host "[Warning] API call failed: $_.`n Conducting retry #$retryCount."
+                Write-Host "$result"
                 Start-Sleep -Seconds 5
                 $retryCount = $retryCount + 1
             }
