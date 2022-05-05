@@ -44,6 +44,7 @@ stages:
 - stage: deploy_playbooks
   jobs:
     - job: AgentJob
+      permissions: write-all
       pool:
        name: Azure Pipelines
        vmImage: 'windows-2019'
