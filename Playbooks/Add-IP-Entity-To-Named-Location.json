@@ -1,0 +1,266 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Entities_-_Get_IPs": {
+                "inputs": {
+                    "body": "@triggerBody()?['object']?['properties']?['relatedEntities']",
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/entities/ip"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+            },
+            "For_each_IP": {
+                "actions": {
+                    "Check-New-Location": {
+                        "actions": {
+                            "Append_to_array_newIPs": {
+                                "inputs": {
+                                    "name": "newIPs",
+                                    "value": {
+                                        "@@odata.type": "#microsoft.graph.iPv4CidrRange",
+                                        "cidrAddress": "@{items('For_each_IP')?['Address']}/32"
+                                    }
+                                },
+                                "runAfter": {},
+                                "type": "AppendToArrayVariable"
+                            }
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "equals": [
+                                        "@length(body('Filter_array'))",
+                                        0
+                                    ]
+                                }
+                            ]
+                        },
+                        "runAfter": {
+                            "Filter_array": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "If"
+                    },
+                    "Filter_array": {
+                        "inputs": {
+                            "from": "@body('Parse_JSON')?['ipRanges']",
+                            "where": "@equals(item()?['cidrAddress'], concat(items('For_each_IP')?['Address'], '/32'))"
+                        },
+                        "runAfter": {},
+                        "type": "Query"
+                    }
+                },
+                "foreach": "@body('Entities_-_Get_IPs')?['IPs']",
+                "runAfter": {
+                    "Parse_JSON": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "Get-Named-Location": {
+                "inputs": {
+                    "authentication": {
+                        "audience": "https://graph.microsoft.com",
+                        "type": "ManagedServiceIdentity"
+                    },
+                    "method": "GET",
+                    "uri": "https://graph.microsoft.com/beta/identity/conditionalAccess/namedLocations/@{body('Get-Named-Location-Id')['value'][0]['id']}"
+                },
+                "runAfter": {
+                    "Get-Named-Location-Id": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            },
+            "Get-Named-Location-Id": {
+                "inputs": {
+                    "authentication": {
+                        "audience": "https://graph.microsoft.com",
+                        "type": "ManagedServiceIdentity"
+                    },
+                    "method": "GET",
+                    "uri": "https://graph.microsoft.com/v1.0/identity/conditionalAccess/namedLocations?$filter=displayName%20eq%20'@{encodeUriComponent(variables('namedLocationName'))}'"
+                },
+                "runAfter": {
+                    "Initialize_namedLocationName": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            },
+            "Initialize_namedLocationName": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "namedLocationName",
+                            "type": "string",
+                            "value": "IPAs"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_newIPs_Array": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_newIPs_Array": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "newIPs",
+                            "type": "array",
+                            "value": []
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Entities_-_Get_IPs": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Parse_JSON": {
+                "inputs": {
+                    "content": "@body('Get-Named-Location')",
+                    "schema": {
+                        "properties": {
+                            "@@odata.context": {
+                                "type": "string"
+                            },
+                            "@@odata.type": {
+                                "type": "string"
+                            },
+                            "createdDateTime": {
+                                "type": "string"
+                            },
+                            "displayName": {
+                                "type": "string"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "ipRanges": {
+                                "items": {
+                                    "properties": {
+                                        "@@odata.type": {
+                                            "type": "string"
+                                        },
+                                        "cidrAddress": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "@@odata.type",
+                                        "cidrAddress"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            },
+                            "isTrusted": {
+                                "type": "boolean"
+                            },
+                            "modifiedDateTime": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "runAfter": {
+                    "Get-Named-Location": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ParseJson"
+            },
+            "Update-Named-Location-If-Needed": {
+                "actions": {
+                    "Update-Named-Location": {
+                        "inputs": {
+                            "authentication": {
+                                "audience": "https://graph.microsoft.com",
+                                "type": "ManagedServiceIdentity"
+                            },
+                            "body": {
+                                "@@odata.type": "#microsoft.graph.ipNamedLocation",
+                                "ipRanges": "@union(variables('newIPs'), body('Parse_JSON')?['ipRanges'])"
+                            },
+                            "headers": {
+                                "Content-type": "application/json"
+                            },
+                            "method": "PATCH",
+                            "uri": "https://graph.microsoft.com/beta/identity/conditionalAccess/namedLocations/@{body('Get-Named-Location-Id')['value'][0]['id']}"
+                        },
+                        "runAfter": {},
+                        "type": "Http"
+                    }
+                },
+                "expression": {
+                    "and": [
+                        {
+                            "greater": [
+                                "@length(variables('newIPs'))",
+                                0
+                            ]
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "For_each_IP": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "If"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "Microsoft_Sentinel_incident": {
+                "inputs": {
+                    "body": {
+                        "callback_url": "@{listCallbackUrl()}"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                        }
+                    },
+                    "path": "/incident-creation"
+                },
+                "type": "ApiConnectionWebhook"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "azuresentinel": {
+                    "connectionId": "/subscriptions/2ae38f62-a45d-4189-8f67-4ed5fab0f7b7/resourceGroups/sentinel-env/providers/Microsoft.Web/connections/azuresentinel-Get-GeoFromIpAndTagIncident",
+                    "connectionName": "azuresentinel-Get-GeoFromIpAndTagIncident",
+                    "id": "/subscriptions/2ae38f62-a45d-4189-8f67-4ed5fab0f7b7/providers/Microsoft.Web/locations/eastus/managedApis/azuresentinel"
+                }
+            }
+        }
+    }
+}
