@@ -20,7 +20,7 @@ on:
 
 jobs:
   deploy-content:
-    runs-on: windows-latest
+    runs-on: [self-hosted label-1]
     env:
       resourceGroupName: 'rgwe01-sentinel'
       workspaceName: 'zwe01directtestsentinellog01'
