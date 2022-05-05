@@ -1,4 +1,4 @@
 FileName, CommitSha
-Playbooks\Enrich-SentinelIncident-MDATPTVM.json,7a8998c007a43cfd980e8e580147aece8fd5ee82
 Playbooks\Block-AADUserOrAdmin.json,f8e7786d42ae806169e0860f7060ea553653b7f5
+Playbooks\Enrich-SentinelIncident-MDATPTVM.json,7a8998c007a43cfd980e8e580147aece8fd5ee82
 Playbooks\Change-Incident-Severity.json,699293fb25cc30744411b07720a06b16b6765833
