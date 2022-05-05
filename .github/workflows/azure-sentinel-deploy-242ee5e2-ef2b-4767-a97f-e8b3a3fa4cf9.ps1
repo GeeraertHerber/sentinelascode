@@ -145,7 +145,6 @@ function PushCsvToRepo($getTreeResponse) {
         Headers     = $header
         Body        = $body | ConvertTo-Json
     }
-    Write-Host "$githubAuthToken"
     AttemptInvokeRestMethod "Put" $createFileUrl $body $null 3
 }
 
@@ -170,7 +169,6 @@ function CleanDeletedFilesFromTable {
 
 function AttemptInvokeRestMethod($method, $url, $body, $contentTypes, $maxRetries) {
     $Stoploop = $false
-    # Write-Host "$method, $url, $body, $contentTypes"
     $retryCount = 0
     do {
         try {
