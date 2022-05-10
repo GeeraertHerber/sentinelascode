@@ -34,8 +34,8 @@ jobs:
       smartDeployment: 'true'
 
     steps:
-    - name: Install Azure CLI
-      run: bash curl -L https://aka.ms/InstallAzureCli | bash
+    # - name: Install Azure CLI
+    #   run: bash curl -L https://aka.ms/InstallAzureCli | bash
 
     - name: Login to Azure (Attempt 1)
       continue-on-error: true
