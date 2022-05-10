@@ -16,27 +16,23 @@ on:
     - '**'
     - '!.github/workflows/**'  # this filter prevents other workflow changes from triggering this workflow
     - '.github/workflows/sentinel-deploy-0670ef20-eda7-453e-8dcd-7f5fb2df7cd6.yml'
-    - '!.sentinel/**'
 
 jobs:
   deploy-content:
-    runs-on: [ubuntu-latest]
+    runs-on: windows-latest
     env:
       resourceGroupName: 'rgwe01-sentinel'
       workspaceName: 'zwe01directtestsentinellog01'
       directory: '${{ github.workspace }}'
       cloudEnv: 'AzureCloud'
       creds: ${{ secrets.AZURE_SENTINEL_CREDENTIALS_0670ef20eda7453e8dcd7f5fb2df7cd6 }}
-      contentTypes: 'Playbook'
+      contentTypes: 'Playbook,Workbook'
       branch: 'direct_branch'
       sourceControlId: '0670ef20-eda7-453e-8dcd-7f5fb2df7cd6'
-      githubAuthToken: ${{ secrets.GITHUBAUTHTOKEN  }}
+      githubAuthToken: ${{ secrets.GITHUB_TOKEN }}
       smartDeployment: 'true'
 
     steps:
-    # - name: Install Azure CLI
-    #   run: bash curl -L https://aka.ms/InstallAzureCli | bash
-
     - name: Login to Azure (Attempt 1)
       continue-on-error: true
       id: login1
