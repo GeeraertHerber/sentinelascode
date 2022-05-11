@@ -1,6 +1,6 @@
 FileName, CommitSha
-/home/runner/work/sentinelascode/sentinelascode/AnalyticsRules/Azure_Sentinel_analytics_rules.json,
-Playbooks\Change-Incident-Severity.json,699293fb25cc30744411b07720a06b16b6765833
-Playbooks\Enrich-SentinelIncident-MDATPTVM.json,7a8998c007a43cfd980e8e580147aece8fd5ee82
 /home/runner/work/sentinelascode/sentinelascode/Playbooks/Change-Incident-Severity.json,
+Playbooks\Change-Incident-Severity.json,699293fb25cc30744411b07720a06b16b6765833
+/home/runner/work/sentinelascode/sentinelascode/AnalyticsRules/Azure_Sentinel_analytics_rules.json,
 /home/runner/work/sentinelascode/sentinelascode/Playbooks/Enrich-SentinelIncident-MDATPTVM.json,
+Playbooks\Enrich-SentinelIncident-MDATPTVM.json,7a8998c007a43cfd980e8e580147aece8fd5ee82
