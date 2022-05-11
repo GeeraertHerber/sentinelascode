@@ -322,7 +322,7 @@ function IsValidResourceType($template) {
         }
     }
     catch {
-        Write-Host "[Error] Failed to check valid resource type."
+        # Write-Host "[Error] Failed to check valid resource type."
         $isAllowedResources = $false
     }
     return $isAllowedResources
