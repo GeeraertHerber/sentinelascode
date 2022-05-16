@@ -18,7 +18,7 @@ on:
     - '.github/workflows/sentinel-deploy-0670ef20-eda7-453e-8dcd-7f5fb2df7cd6.yml'
     - '!.sentinel/*'
     tags: 
-    - 'v*     '
+    - 'v*'
 jobs:
   deploy-content:
     runs-on: ubuntu-latest
