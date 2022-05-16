@@ -14,6 +14,7 @@
       "kind": "Scheduled",
       "apiVersion": "2021-03-01-preview",
       "properties": {
+        "suppressionDuration":"P1D",
         "queryFrequency": "P1D",
         "query": "\nlet starttime = 8d;\nlet endtime = 1d;\nlet threshold = 10;\nDnsEvents \n| where TimeGenerated > ago(endtime)\n| where Name contains \"in-addr.arpa\" \n| summarize StartTimeUtc = min(TimeGenerated), EndTimeUtc = max(TimeGenerated), dcount(Name) by ClientIP\n| where dcount_Name > threshold\n| project StartTimeUtc, EndTimeUtc, ClientIP , dcount_Name \n| join kind=leftanti (DnsEvents \n    | where TimeGenerated between(ago(starttime)..ago(endtime))\n    | where Name contains \"in-addr.arpa\" \n    | summarize dcount(Name) by ClientIP, bin(TimeGenerated, 1d)\n    | where dcount_Name > threshold\n    | project ClientIP , dcount_Name \n) on ClientIP\n| extend timestamp = StartTimeUtc, IPCustomEntity = ClientIP\n",
         "tactics": [
