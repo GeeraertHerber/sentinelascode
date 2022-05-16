@@ -63,13 +63,13 @@ function FolderCrawler {
         else {
             $extension = [System.IO.Path]::GetExtension($Name)
             if ($extension -in @('.yaml', '.yml')){
-                ConvertToCorespondingFile -Path $itemPath
+                ConvertToCorespondingFileType -Path $itemPath
             }
         }
     }
 }
 
-function ConvertToCorespondingFile{
+function ConvertToCorespondingFileType{
     param(
         [Parameter(Mandatory=$true)]$Path
     )
@@ -78,11 +78,75 @@ function ConvertToCorespondingFile{
     [array]::Reverse($pathParts)
     foreach ($part in $pathParts) {
         if ($part -in $listSentinelAtrib ){
-            
+            ConvertToJSONFile -Path $Path -Type $part
+            break
         }
+        
     }
-    Write-Output $pathParts
 
+}
+
+function ConvertToJSONFile{
+    param(
+        [Parameter()]$Path,
+        [Parameter()]$Type)
+
+        $content = Get-Content -Path $Path
+
+        $template = [PSCustomObject]@{
+            '$schema'      = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
+            contentVersion = "1.0.0.0"
+            Parameters     = @{
+                Workspace = @{
+                    type = "string"
+                }
+            }
+            resources      = @(
+                [PSCustomObject]@{
+                    id         = ""
+                    name       = ""
+                    type       = ""
+                    kind       = ""
+                    apiVersion = "2021-03-01-preview"
+                    properties = [PSCustomObject]@{}
+                }
+            )
+        }
+
+        # Update the template format with the data from YAML file
+        $convert = $content | ConvertFrom-Yaml -ErrorAction Stop | Select-Object * -ExcludeProperty relevantTechniques, kind, requiredDataConnectors, version, tags
+        $($template.resources).id = "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/" + $convert.id + "')]"
+        $($template.resources).name = "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/" + $convert.id + "')]"
+        $($template.resources).properties = ($convert | Select-Object * -ExcludeProperty id)
+        
+
+    if ($part -eq 'AnalyticsRules'){
+        $($template.resources).type = "Microsoft.OperationalInsights/workspaces/providers/alertRules"
+        $($template.resources).kind = "Scheduled"
+        $name ="newFile"
+        $outputFile = "C:\Users\Gebruiker\Documents\Github\sentinelascode\yaml-to-json\AnalyticsRules\$name.json"
+    }
+    elseif ($Type -eq 'HuntingRules'){
+
+    }
+    elseif ($Type -eq 'Workbooks'){
+
+    }
+    elseif ($Type -eq 'Playbooks'){
+
+    }
+    elseif ($Type -eq 'AutomationRules') {
+       
+    }
+
+   
+
+    try {
+        $template | ConvertTo-Json -Depth 20 | Out-File $outputFile -ErrorAction Stop
+    }
+    catch {
+        Write-Error $_.Exception.Message
+    }
 }
 
 ConvertToYAMLToJSON
