@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "metadata":{
         "comments": "This playbook will change Incident Severity based on specific username that is part of the Incident user entity.",
-        "author": "Yaniv Shasha"
+        "author": "Yaniv Shasha" 
     },
     "parameters": {
         "PlaybookName": {
