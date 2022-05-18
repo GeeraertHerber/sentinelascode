@@ -18,10 +18,10 @@
         "automationRuleGuid": "[uniqueString(parameters('automationRuleName'))]" 
     },
     "resources": [
-        {
-            "type": "Microsoft.OperationalInsights/workspaces/providers/automationRules",
-            "name": "sentineltestenv/Microsoft.OperationalInsights/18827d6f-ace1-4baa-9a37-489da9b3c76a",
-            "apiVersion": "2021-09-01-preview",
+        {   
+            "id": "/subscriptions/2ae38f62-a45d-4189-8f67-4ed5fab0f7b7/resourceGroups/SentinelDirect/providers/Microsoft.OperationalInsights/workspaces/sentineltestenv/providers/Microsoft.SecurityInsights/AutomationRules/78827d6f-ace1-4b8a-9a37-489da9b3c76a",
+            "type": "Microsoft.SecurityInsights/AutomationRules",
+            "name": "78827d6f-ace1-4b8a-9a37-489da9b3c76a",
             "properties": {
                 "actions": [
                     {
