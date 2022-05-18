@@ -45,7 +45,7 @@
                         "actionType": "ModifyProperties",
                         "actionConfiguration": {
                             "status": "Closed",
-                            "classification": "Undetermined",
+                            "classification": "Undetermined"
                         }
                     },
                     {
