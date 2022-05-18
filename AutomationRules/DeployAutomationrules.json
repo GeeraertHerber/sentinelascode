@@ -19,7 +19,7 @@
     },
     "resources": [
         {   
-            "id": "/subscriptions/2ae38f62-a45d-4189-8f67-4ed5fab0f7b7/resourceGroups/SentinelDirect/providers/Microsoft.OperationalInsights/workspaces/sentineltestenv/providers/Microsoft.SecurityInsights/AutomationRules/78827d6f-ace1-4b8a-9a37-489da9b3c76a",
+            "id": "/subscriptions/2ae38f62-a45d-4189-8f67-4ed5fab0f7b7/resourceGroups/sentineldirect/providers/Microsoft.SecurityInsights/AutomationRules/78827d6f-ace1-4b8a-9a37-489da9b3c76a",
             "type": "Microsoft.SecurityInsights/AutomationRules",
             "name": "78827d6f-ace1-4b8a-9a37-489da9b3c76a",
             "apiVersion": "2021-10-01",
