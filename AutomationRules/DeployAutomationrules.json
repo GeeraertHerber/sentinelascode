@@ -24,7 +24,6 @@
                 "order": 2,
                 "triggeringLogic": {
                     "isEnabled": true,
-                    "expirationTimeUtc": null,
                     "triggersOn": "Incidents",
                     "triggersWhen": "Created",
                     "conditions": [
@@ -47,7 +46,6 @@
                         "actionConfiguration": {
                             "status": "Closed",
                             "classification": "Undetermined",
-                            "classificationReason": null
                         }
                     },
                     {
