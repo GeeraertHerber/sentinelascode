@@ -8,7 +8,7 @@
     "parameters": {
         "PlaybookName": {
             "defaultValue": "Enrich-SentinelIncident-MDATPTVM-OK",
-            "type": "String"
+            "type": "string"
         }
     },
     "variables": {
