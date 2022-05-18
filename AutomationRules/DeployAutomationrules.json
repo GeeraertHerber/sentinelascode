@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-01-01-preview/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "existingWorkspaceName": {
@@ -29,7 +29,7 @@
             "type": "Microsoft.SecurityInsights/automationRules",
             "name": "[variables('automationRuleGuid')]",
             "scope": "[concat('Microsoft.OperationalInsights/workspaces/', parameters('existingWorkspaceName'))]",
-            "apiVersion": "2019-01-01-preview",
+            "apiVersion": "2021-09-01-preview",
             "properties": {
                 "displayName": "[parameters('automationRuleName')]",
                 "order": 2,
