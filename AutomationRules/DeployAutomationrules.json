@@ -16,7 +16,7 @@
     "resources": [
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/automationRules",
-            "name": "AutomationRule/workspaces/providers",
+            "name": "AutomationRule/workspaces/providers/hello",
             "apiVersion": "2021-09-01-preview",
             "properties": {
                 "actions": [
