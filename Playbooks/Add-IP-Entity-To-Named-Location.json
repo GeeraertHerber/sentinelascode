@@ -1,8 +1,7 @@
 {
     "properties": {
         "provisioningState": "Succeeded",
-        "createdTime": "2022-05-16T08:38:01.508536Z",
-        "changedTime": "2022-05-16T08:38:01.500643Z",
+
         "state": "Enabled",
         "version": "08585489166040246392",
         "accessEndpoint": "https://prod-241.westeurope.logic.azure.com:443/workflows/0b6787a1631645679a47e4de66862780",
