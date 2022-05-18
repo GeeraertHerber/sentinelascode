@@ -1,8 +1,0 @@
-{
-    "deployments": [
-        {
-            "resourcegroup": "RGWE01-SENTINEL",
-            "workspace": "zwe01directtestsentinellog01"
-        }
-    ]
-}
