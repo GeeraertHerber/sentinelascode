@@ -10,7 +10,8 @@
             }
         },
         "workspace":{
-            "type":"string"
+            "type":"string",
+            "defaultValue": "sentineltestenv"
         }
     },
     "variables": {
