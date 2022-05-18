@@ -16,10 +16,11 @@ on:
     - '**'
     - '!.github/workflows/**'  # this filter prevents other workflow changes from triggering this workflow
     - '.github/workflows/sentinel-deploy-18827d6f-ace1-4baa-9a37-489da9b3c76a.yml'
+    - '!.sentinel/**'
 
 jobs:
   deploy-content:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       resourceGroupName: 'sentineldirect'
       workspaceName: 'sentineltestenv'
