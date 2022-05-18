@@ -1,4 +1,3 @@
-
 param(
     [Parameter(Mandatory=$true)]$Path,
     [Parameter(Mandatory=$false)]$OutputFolder
@@ -63,6 +62,7 @@ function FolderCrawler {
         else {
             $extension = [System.IO.Path]::GetExtension($Name)
             if ($extension -in @('.yaml', '.yml')){
+                
                 ConvertToCorespondingFileType -Path $itemPath
             }
         }
@@ -78,7 +78,8 @@ function ConvertToCorespondingFileType{
     [array]::Reverse($pathParts)
     foreach ($part in $pathParts) {
         if ($part -in $listSentinelAtrib ){
-            ConvertToJSONFile -Path $Path -Type $part
+            $fileName = [System.IO.Path]::GetFileNameWithoutExtension($Path)
+            ConvertToJSONFile -Path $Path -Type $part -Name $fileName
             break
         }
         
@@ -89,7 +90,8 @@ function ConvertToCorespondingFileType{
 function ConvertToJSONFile{
     param(
         [Parameter()]$Path,
-        [Parameter()]$Type)
+        [Parameter()]$Type,
+        [Parameter()]$Name)
 
         $content = Get-Content -Path $Path
 
@@ -115,16 +117,16 @@ function ConvertToJSONFile{
 
         # Update the template format with the data from YAML file
         $convert = $content | ConvertFrom-Yaml -ErrorAction Stop | Select-Object * -ExcludeProperty relevantTechniques, kind, requiredDataConnectors, version, tags
-        $($template.resources).id = "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/" + $convert.id + "')]"
+
         $($template.resources).name = "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/" + $convert.id + "')]"
         $($template.resources).properties = ($convert | Select-Object * -ExcludeProperty id)
         
 
     if ($part -eq 'AnalyticsRules'){
+        $($template.resources).id = "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/" + $convert.id + "')]"
         $($template.resources).type = "Microsoft.OperationalInsights/workspaces/providers/alertRules"
         $($template.resources).kind = "Scheduled"
-        $name ="newFile"
-        $outputFile = "C:\Users\Gebruiker\Documents\Github\sentinelascode\yaml-to-json\AnalyticsRules\$name.json"
+        $outputFile = "AnalyticsRules\$Name.json"
     }
     elseif ($Type -eq 'HuntingRules'){
 
