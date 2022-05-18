@@ -22,10 +22,9 @@
     },
     "resources": [
         {
-            "id": "66666666",
+            "id": "[concat{resourceId{'Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/automationRules,variables('automationRuleGuid')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/automationRules",
             "name": "[variables('automationRuleGuid')]",
-            "location": "[parameters('location')]",
             "apiVersion": "2021-09-01-preview",
             "properties": {
                 "actions": [
