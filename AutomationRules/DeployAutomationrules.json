@@ -28,7 +28,7 @@
         {
             "type": "Microsoft.SecurityInsights/automationRules",
             "name": "[variables('automationRuleGuid')]",
-            "scope": "[concat('Microsoft.OperationalInsights/workspaces/', parameters('existingWorkspaceName'))]",
+            "location": "[resourceGroup().location]",
             "apiVersion": "2021-09-01-preview",
             "properties": {
                 "displayName": "[parameters('automationRuleName')]",
@@ -39,49 +39,16 @@
                     "triggersOn": "Incidents",
                     "triggersWhen": "Created",
                     "conditions": [
-                            {
-                                "conditionType": "Property",
-                                "conditionProperties": {
-                                    "propertyName": "IncidentRelatedAnalyticRuleIds",
-                                    "operator": "Contains",
-                                    "propertyValues": [
-                                        "[resourceId('Microsoft.OperationalInsights/workspaces/providers/alertRules',parameters('existingWorkspaceName'),'Microsoft.SecurityInsights',parameters('existingRuleId'))]"
-                                    ]
-                                }
-                            },
-                            {
-                                "conditionType": "Property",
-                                "conditionProperties": {
-                                    "propertyName": "IncidentSeverity",
-                                    "operator": "Equals",
-                                    "propertyValues": [
-                                        "High"
-                                    ]
-                                }
-                            },
-                            {
-                                "conditionType": "Property",
-                                "conditionProperties": {
-                                    "propertyName": "IncidentTactics",
-                                    "operator": "Contains",
-                                    "propertyValues": [
-                                        "InitialAccess",
-                                        "Execution"
-                                    ]
-                                }
-                            },
-                            {
-                                "conditionType": "Property",
-                                "conditionProperties": {
-                                    "propertyName": "IncidentTitle",
-                                    "operator": "Contains",
-                                    "propertyValues": [
-                                        "urgent"
-                                    ]
-                                }
+                        {
+                            "conditionType": "Property",
+                            "conditionProperties": {
+                                "propertyName": "IncidentSeverity",
+                                "operator": "Equals",
+                                "propertyValues": [
+                                    "High"
+                                ]
                             }
-
-
+                        }
                     ]
                 },
                 "actions": [
