@@ -4,7 +4,7 @@
     "parameters": {
         "automationRuleName": {
             "type": "string",
-            "defaultValue": "New Automation Rule",
+            "defaultValue": "New Automation Rule hopefully",
             "metadata": {
                 "description": "The name of the automation rule that will be deployed"
             }
