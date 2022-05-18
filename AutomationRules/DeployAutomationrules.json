@@ -15,14 +15,16 @@
             "metadata": {
               "description": "Location for all resources."
             }
-          }
+        },
+        "workspace": {
+            "type": "string"
+        }
     },
     "variables": {
         "automationRuleGuid": "[uniqueString(parameters('automationRuleName'))]" 
     },
     "resources": [
         {
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/automationRules,variables('automationRuleGuid'))]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/automationRules",
             "name": "[variables('automationRuleGuid')]",
             "apiVersion": "2021-09-01-preview",
