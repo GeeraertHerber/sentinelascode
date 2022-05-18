@@ -16,21 +16,20 @@ on:
     - '**'
     - '!.github/workflows/**'  # this filter prevents other workflow changes from triggering this workflow
     - '.github/workflows/sentinel-deploy-18827d6f-ace1-4baa-9a37-489da9b3c76a.yml'
-    - '!.sentinel/**'
 
 jobs:
   deploy-content:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env:
       resourceGroupName: 'sentineldirect'
       workspaceName: 'sentineltestenv'
       directory: '${{ github.workspace }}'
       cloudEnv: 'AzureCloud'
       creds: ${{ secrets.AZURE_SENTINEL_CREDENTIALS_18827d6face14baa9a37489da9b3c76a }}
-      contentTypes: 'Playbook'
+      contentTypes: 'Playbook,AnalyticsRule,Workbook'
       branch: 'STD-Direct'
       sourceControlId: '18827d6f-ace1-4baa-9a37-489da9b3c76a'
-      githubAuthToken: ${{ secrets.GITHUBAUTHTOKEN }}
+      githubAuthToken: ${{ secrets.GITHUB_TOKEN }}
       smartDeployment: 'true'
 
     steps:
