@@ -8,6 +8,9 @@
             "metadata": {
                 "description": "The name of the automation rule that will be deployed"
             }
+        },
+        "workspace":{
+            "type":"string"
         }
     },
     "variables": {
@@ -16,7 +19,7 @@
     "resources": [
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/automationRules",
-            "name": "workspaces/providers/automationRules",
+            "name": "[concat(parameters('workspace'), '/Microsoft.OperationalInsights/18827d6f-ace1-4baa-9a37-489da9b3c76a",
             "apiVersion": "2021-09-01-preview",
             "properties": {
                 "actions": [
