@@ -25,7 +25,7 @@
     },
     "resources": [
         {
-            "type": "Microsoft.OperationalInsights/workspaces/providers/automationRules",
+            "type": "Microsoft.SecurityInsights/automationRules",
             "name": "[variables('automationRuleGuid')]",
             "apiVersion": "2021-09-01-preview",
             "properties": {
