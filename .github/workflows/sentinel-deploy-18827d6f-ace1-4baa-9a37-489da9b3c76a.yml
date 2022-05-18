@@ -29,7 +29,7 @@ jobs:
       contentTypes: 'Playbook,AnalyticsRule,Workbook,AutomationRule'
       branch: 'STD-Direct'
       sourceControlId: '18827d6f-ace1-4baa-9a37-489da9b3c76a'
-      githubAuthToken: ${{ secrets.GITHUB_TOKEN }}
+      githubAuthToken: ${{ secrets.GITHUBAUTHTOKEN }}
       smartDeployment: 'true'
 
     steps:
