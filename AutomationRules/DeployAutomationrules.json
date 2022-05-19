@@ -1,28 +1,12 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "automationRuleName": {
-            "type": "string",
-            "defaultValue": "New Automation Rule hopehully",
-            "metadata": {
-                "description": "The name of the automation rule that will be deployed"
-            }
-        },
-        "workspace":{
-            "type":"string",
-            "defaultValue": "sentineltestenv"
-        }
-    },
-    "variables": {
-        "automationRuleGuid": "[uniqueString(parameters('automationRuleName'))]" 
-    },
     "resources": [
         {   
-            "id": "/subscriptions/2ae38f62-a45d-4189-8f67-4ed5fab0f7b7/resourceGroups/sentineldirect/providers/Microsoft.SecurityInsights/AutomationRules/78827d6f-ace1-4b8a-9a37-489da9b3c76a",
+           
             "type": "Microsoft.SecurityInsights/AutomationRules",
             "name": "78827d6f-ace1-4b8a-9a37-489da9b3c76a",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2021-10-01",
             "properties": {
                 "actions": [
                     {
