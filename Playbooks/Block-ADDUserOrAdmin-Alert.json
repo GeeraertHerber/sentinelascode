@@ -20,7 +20,7 @@
             "name": "Benjamin Kovacevic"
         }
     },
-    "parameters": {
+    "parameters": { 
         "PlaybookName": {
             "defaultValue": "Block-AADUserOrAdmin-Alert",
             "type": "string"
