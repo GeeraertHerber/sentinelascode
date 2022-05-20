@@ -20,7 +20,7 @@ on:
 
 jobs:
   deploy-content:
-    runs-on: self-hosted
+    runs-on: windows-latest
     env:
       resourceGroupName: 'sentineldirect'
       workspaceName: 'sentineltestenv'
